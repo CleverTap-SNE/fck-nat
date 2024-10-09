@@ -7,7 +7,7 @@ packer {
   }
 }
 
-post-processor "manifest" {}
+post-processors "manifest" {}
 
 variable "version" {
   type = string
