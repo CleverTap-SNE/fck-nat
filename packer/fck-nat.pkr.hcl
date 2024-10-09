@@ -7,8 +7,6 @@ packer {
   }
 }
 
-post-processors "manifest" {}
-
 variable "version" {
   type = string
 }
@@ -112,4 +110,6 @@ build {
       "sudo systemctl enable kpatch.service && sudo systemctl start kpatch.service",
     ]
   }
+
+  post-processor "manifest" {}
 }
