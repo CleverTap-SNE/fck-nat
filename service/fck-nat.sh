@@ -58,17 +58,11 @@ else
 fi
 
 echo "Enabling ip_forward..."
-echo "net.ipv4.ip_forward = 1" >> /etc/sysctl.conf
-
-echo "Update nf_contrack_max to ten times the default value for given instance type..."
+sysctl -q -w net.ipv4.ip_forward=1
+sysctl -q -w net.ipv4.ip_local_port_range="1024 65535"
 nf_conntrack_max_current_value=$(sysctl -n net.netfilter.nf_conntrack_max)
 nf_conntrack_max_expected_value=$((nf_conntrack_max_current_value * 10))
-echo "net.netfilter.nf_conntrack_max = $nf_conntrack_max_expected_value" >> /etc/sysctl.conf
-
-echo "Update ip_local_port_range"
-echo "net.ipv4.ip_local_port_range = 1024 65535" >> /etc/sysctl.conf
-
-sysctl -p
+sysctl -q -w net.netfilter.nf_conntrack_max=$nf_conntrack_max_expected_value
 
 echo "Disabling reverse path protection..."
 for i in $(find /proc/sys/net/ipv4/conf/ -name rp_filter) ; do
