@@ -103,6 +103,12 @@ build {
 
   provisioner "shell" {
     inline = [
+      "sudo yum install -y conntrack-tools wget"
+    ]
+  }
+
+  provisioner "shell" {
+    inline = [
       "sudo dnf install -y kpatch-dnf",
       "sudo dnf kernel-livepatch -y auto",
       "sudo dnf install -y kpatch-runtime",
